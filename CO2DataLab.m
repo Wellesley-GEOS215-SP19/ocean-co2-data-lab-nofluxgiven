@@ -1,4 +1,4 @@
-%% Grace Callahan & Shreya Parjan
+%% THIS IS THE CORRECT ONE Grace Callahan & Shreya Parjan
 
 % Instructions: Follow through this code step by step, while also referring
 % to the overall instructions and questions from the lab assignment sheet.
@@ -29,13 +29,15 @@ sstGrid = NaN*zeros(length(latgrid),length(longrid),length(mongrid));
 %% 2b. Pull out the seawater pCO2 (PCO2_SW) and sea surface temperature (SST)
 %data and reshape it into your new 3-dimensional arrays
 for i = 1:length(CO2data.LON)
+   m = CO2data.MONTH(i);
    j = find(longrid == CO2data.LON(i));
    k = find(latgrid == CO2data.LAT(i));
+   l = find(mongrid==m);
    % Now we fill the grid
-   pCO2Grid(j,k,mongrid) =(CO2data.PCO2_SW(i));
+   pCO2Grid(j,k,l) =(CO2data.PCO2_SW(i));
    
    %SST 
-   sstGrid(j,k,mongrid) =(CO2data.SST(i));
+   sstGrid(j,k,l) =(CO2data.SST(i));
    
 end
 %<--
@@ -47,6 +49,8 @@ end
 %January
 
 imagesc(sstGrid(:,:,1))
+
+imagesc(pCO2Grid(:,:,1))
 
 %% 3b. Now pretty global maps of one month of each of SST and pCO2 data.
 %I have provided example code for plotting January sea surface temperature
@@ -65,16 +69,40 @@ title('January Sea Surface Temperature (^oC)')
 %whether you can modify features of this map such as the contouring
 %interval, color of the contour lines, labels, etc.
 
-%<--
+
+%title('January Sea Surface Temperature (^oC)')
 
 %% 4. Calculate and plot a global map of annual mean pCO2
 %<--
+% Find the mean!
+meanpCO2 = mean(pCO2Grid,3)
+meanpsst = mean(sstGrid,3)
+%disp(meanpCO2)
+
+figure(2); clf
+worldmap world
+contourfm(latgrid, longrid, pCO2Grid(:,:,1)', 'linecolor','none');
+colorbar
+geoshow('landareas.shp','FaceColor','black')
 
 %% 5. Calculate and plot a global map of the difference between the annual mean seawater and atmosphere pCO2
-%<--
+meanpCO2air = mean(CO2data.PCO2_AIR(1:end))
+% source = https://www.esrl.noaa.gov/gmd/ccgg/trends/gl_data.html
+meanpCO22000 = 368.84
+mean_difference = meanpCO2air - meanpCO2;
+
+figure(3); clf
+worldmap world
+contourfm(latgrid, longrid, mean_difference, 'linecolor','none');
+colorbar
+geoshow('landareas.shp','FaceColor','black')
+
+
 
 %% 6. Calculate relative roles of temperature and of biology/physics in controlling seasonal cycle
 %<--
+
+
 
 %% 7. Pull out and plot the seasonal cycle data from stations of interest
 %Do for BATS, Station P, and Ross Sea (note that Ross Sea is along a
