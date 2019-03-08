@@ -116,22 +116,51 @@ biopCO2 = pCO2Grid.*exp(0.0423*(repmat(meanpsst,[1 1 12])-sstGrid));
 
 temppCO2 = meanpCO2.*exp(0.0423*(sstGrid-repmat(meanpsst,[1 1 12])));
 
-% T/B ratio
+% T-B effects
+% + means temp exceeds bio, - means bio exceeds temp
 
-biopCO2/
-
+tb = mean(biopCO2-temppCO2);
+tbAnnualMean = mean(biopCO2-temppCO2,3);
 
 %% 7. Pull out and plot the seasonal cycle data from stations of interest
 %Do for BATS, Station P, and Ross Sea (note that Ross Sea is along a
 %section of 14 degrees longitude - I picked the middle point)
 
+% BATS
+% 31°40'N, 64°10' W 
+% 31.67 N
+% 64.17 --> 295.83 W
+%bats = find(CO2data.LAT == 32 & CO2data.LON == 295.8);
+% this isnt working and I dont know how to fix it :(  -GC
 
+% none of this section works rip rip
 
+% Station Papa
+% 50.1°N, 144.9°W
+% converted longitude is 215.1 W
+%papa = find(CO2data.LAT == 50 & CO2data.LON == 215.1);
+
+% Ross Sea
+% 75°S 175°W? / ?75°S 175°W
+%ross = find(CO2data.LAT == -75 & CO2data.LON == 185);
 
 %% 8. Reproduce your own versions of the maps in figures 7-9 in Takahashi et al. 2002
 % But please use better colormaps!!!
 % Mark on thesese maps the locations of the three stations for which you plotted the
 % seasonal cycle above
 
+%% Fig 4. Seasonal Biological Drawdown 
+% seasonal amplitude for the pCO2 values corrected to the mean water temperature
+
+% collapses the biological pCO2 grid into two dimensions
+deltabiopCO2 = max(biopCO2,[],3) - min(biopCO2,[],3);
+% Equation #3
+
+figure(4); clf
+worldmap world
+contourfm(latgrid, longrid, deltab, 'linecolor','none');
+colorbar ;
+geoshow('landareas.shp','FaceColor','black');
+title('Seasonal Biological Drawdown of Seawater pCO2')
 
 
