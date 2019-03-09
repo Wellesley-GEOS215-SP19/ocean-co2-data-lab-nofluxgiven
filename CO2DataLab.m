@@ -130,39 +130,67 @@ tbAnnualMean = mean(biopCO2-temppCO2,3);
 % 31°40'N, 64°10' W 
 % 31.67 N
 % 64.17 --> 295.83 W
-%bats = find(CO2data.LAT == 32 & CO2data.LON == 295.8);
-% this isnt working and I dont know how to fix it :(  -GC
 
-% none of this section works rip rip
+find(CO2data.LAT==32 & CO2data.LON == 297.5000)
+latvector=unique(CO2data.LAT) %list of all the latitudes
+batslat=find(latvector==32) %in that list the position of the latitude of interest
+longvector= unique(CO2data.LON)
+batslong= find(longvector==297.500)
+ bats= pCO2Grid(batslong,batslat,:)
+ 
+bats1d=squeeze(bats)
+figure(7); clf
+plot(mongrid,bats1d)
+title("BATS station seasonal cycle data PCO2")
+% 
 
 % Station Papa
 % 50.1°N, 144.9°W
 % converted longitude is 215.1 W
 %papa = find(CO2data.LAT == 50 & CO2data.LON == 215.1);
 
+plat=find(latvector==52) %in that list the position of the latitude of interest
+plong= find(longvector==217.500)
+ papa= pCO2Grid(plong,plat,:)
+ 
+papa1d=squeeze(papa)
+figure(8); clf
+plot(mongrid,papa1d)
+title("Papa station seasonal cycle data PCO2")
 % Ross Sea
 % 75°S 175°W? / ?75°S 175°W
 %ross = find(CO2data.LAT == -75 & CO2data.LON == 185);
+rlat=find(latvector==76) %in that list the position of the latitude of interest
+rlong= find(longvector==187.500)
+ ross= pCO2Grid(rlat,rlong,:)
+ 
+ross1d=squeeze(ross)
+figure(9); clf
+plot(mongrid,ross1d)
+title("Ross Sea station seasonal cycle data PCO2")
 
 %% 8. Reproduce your own versions of the maps in figures 7-9 in Takahashi et al. 2002
 % But please use better colormaps!!!
 % Mark on thesese maps the locations of the three stations for which you plotted the
 % seasonal cycle above
-
-% WE STILL HAVE TO MARK LOCATIONS!!
-% Im writing this in caps so I dont forget
-
+%making a vector with the lat of our stations of interest
+% bats, papa, ross
+stalat= [32 52 76]
+stalong= [297.5 217.5 187.5]
+%making a vector with the long of our stations
 %% Fig 4. Seasonal Biological Drawdown 
 % seasonal amplitude for the pCO2 values corrected to the mean water temperature
 
 % Equation 3
 deltaBiopCO2 = (max(biopCO2,[],3) - min(biopCO2,[],3))';
 
+%takahashi fig 7
 figure(4); clf
 worldmap world
 contourfm(latgrid, longrid, deltaBiopCO2, 'linecolor','none');
-colorbar ;
+colormap(cmocean('haline')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
+scatterm(stalat, stalong, 'filled');
 title('Seasonal Biological Drawdown of Seawater pCO2')
 
 %% Figure 5. Seasonal Temperature Effect on Seawater pCO2
@@ -173,10 +201,11 @@ deltaTemppCO2 = (max(temppCO2,[],3) - min(temppCO2,[],3))';
 figure(5); clf
 worldmap world
 contourfm(latgrid, longrid, deltaTemppCO2, 'linecolor','none');
-colorbar ;
+colormap(cmocean('haline')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
+scatterm(stalat, stalong, 'filled');
 title('Seasonal Temperature Effect on Seawater pCO2')
-
+% JUST NEED TO FIGURE OUT HOW TO CHANGE THE COLOR OF THE POINTS
 %% Figure 6. Temp v Bio Effect
 
 % T-B 
@@ -184,6 +213,7 @@ title('Seasonal Temperature Effect on Seawater pCO2')
 figure(6); clf
 worldmap world
 contourfm(latgrid, longrid, tbAnnualMean', 'linecolor','none');
-colorbar ;
+colormap(cmocean('balance')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
+scatterm(stalat, stalong, 'filled');
 title('Temperature - Biophysical Effect')
