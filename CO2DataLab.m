@@ -141,10 +141,11 @@ batslong= find(longvector==297.500)
 bats1d=squeeze(bats)
 figure(7); clf
 plot(mongrid,bats1d)
-title("BATS station seasonal cycle data PCO2")
-% 
+title("BATS Station seasonal pCO2")
+xlabel("Month")
+ylabel("Seawater pCO2") 
 
-% Station Papa
+%% Station Papa
 % 50.1°N, 144.9°W
 % converted longitude is 215.1 W
 %papa = find(CO2data.LAT == 50 & CO2data.LON == 215.1);
@@ -156,8 +157,11 @@ plong= find(longvector==217.500)
 papa1d=squeeze(papa)
 figure(8); clf
 plot(mongrid,papa1d)
-title("Papa station seasonal cycle data PCO2")
-% Ross Sea
+title("Station Papa seasonal pCO2")
+xlabel("Month")
+ylabel("Seawater pCO2") 
+
+%% Ross Sea
 % 75°S 175°W? / ?75°S 175°W
 %ross = find(CO2data.LAT == -75 & CO2data.LON == 185);
 rlat=find(latvector==76) %in that list the position of the latitude of interest
@@ -167,7 +171,9 @@ rlong= find(longvector==187.500)
 ross1d=squeeze(ross)
 figure(9); clf
 plot(mongrid,ross1d)
-title("Ross Sea station seasonal cycle data PCO2")
+title("Ross Sea Station seasonal pCO2")
+xlabel("Month")
+ylabel("Seawater pCO2") 
 
 %% 8. Reproduce your own versions of the maps in figures 7-9 in Takahashi et al. 2002
 % But please use better colormaps!!!
@@ -193,6 +199,7 @@ geoshow('landareas.shp','FaceColor','black');
 scatterm(stalat, stalong, 'filled');
 title('Seasonal Biological Drawdown of Seawater pCO2')
 
+
 %% Figure 5. Seasonal Temperature Effect on Seawater pCO2
 
 % equation 4
@@ -209,7 +216,6 @@ title('Seasonal Temperature Effect on Seawater pCO2')
 %% Figure 6. Temp v Bio Effect
 
 % T-B 
-
 figure(6); clf
 worldmap world
 contourfm(latgrid, longrid, tbAnnualMean', 'linecolor','none');
