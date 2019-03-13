@@ -56,7 +56,7 @@ end
 %(though you may need to make modifications based on differences in how you
 %set up or named your variables above).
 
-figure(1); clf
+figure(1)
 worldmap world
 contourfm(latgrid, longrid, sstGrid(:,:,1)','linecolor','none');
 colorbar
@@ -83,7 +83,7 @@ meanpCO2 = mean(pCO2Grid,3);
 meanpsst = mean(sstGrid,3);
 %disp(meanpCO2)
 
-figure(2); clf
+figure(2)
 worldmap world
 contourfm(latgrid, longrid, pCO2Grid(:,:,1)', 'linecolor','none');
 colorbar
@@ -196,7 +196,7 @@ worldmap world
 contourfm(latgrid, longrid, deltaBiopCO2, 'linecolor','none');
 colormap(cmocean('haline')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
-scatterm(stalat, stalong, 'filled');
+scatterm(stalat, stalong,'r', 'filled');
 title('Seasonal Biological Drawdown of Seawater pCO2')
 
 
@@ -210,7 +210,7 @@ worldmap world
 contourfm(latgrid, longrid, deltaTemppCO2, 'linecolor','none');
 colormap(cmocean('haline')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
-scatterm(stalat, stalong, 'filled');
+scatterm(stalat, stalong, 'r', 'filled');
 title('Seasonal Temperature Effect on Seawater pCO2')
 % JUST NEED TO FIGURE OUT HOW TO CHANGE THE COLOR OF THE POINTS
 %% Figure 6. Temp v Bio Effect
@@ -221,5 +221,5 @@ worldmap world
 contourfm(latgrid, longrid, tbAnnualMean', 'linecolor','none');
 colormap(cmocean('balance')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
-scatterm(stalat, stalong, 'filled');
+scatterm(stalat, stalong, 'r','filled');
 title('Temperature - Biophysical Effect')
