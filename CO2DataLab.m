@@ -1,4 +1,4 @@
-%% THIS IS THE CORRECT ONE Grace Callahan & Shreya Parjan
+%% THIS IS THE CORRECT ONE Grace Callahan & Shreya Parjan and Jenn
 
 % Instructions: Follow through this code step by step, while also referring
 % to the overall instructions and questions from the lab assignment sheet.
@@ -41,6 +41,23 @@ for i = 1:length(CO2data.LON)
    
 end
 
+%% extension option
+ s=(pCO2Grid(1,:,:))
+ s2= NaN*zeros(74,40,12)
+ s2(2:73, :, :)= pCO2Grid
+ s2(1, :, :)= s
+ s2(74,:,:)=s
+ longrid2= NaN*zeros(74,1)
+ longrid2=[0; longrid; 360]
+ pCO2Gridlong=s2
+ %longrid=longrid2
+ %% same for the sstgrid
+  sg=(sstGrid(1,:,:))
+ sg2= NaN*zeros(74,40,12)
+ sg2(2:73, :, :)= sstGrid
+ sg2(1, :, :)= sg
+ sg2(74,:,:)=sg
+ sstGridlong=sg2
 %% 3a. Make a quick plot to check that your reshaped data looks reasonable
 %Use the imagesc plotting function, which will show a different color for
 %each grid cell in your map. Since you can't plot all months at once, you
@@ -58,7 +75,7 @@ end
 
 figure(1)
 worldmap world
-contourfm(latgrid, longrid, sstGrid(:,:,1)','linecolor','none');
+contourfm(latgrid, longrid2, sstGridlong(:,:,1)','linecolor','none');
 colorbar
 geoshow('landareas.shp','FaceColor','black')
 title('January Sea Surface Temperature (^oC)')
@@ -70,7 +87,7 @@ title('January Sea Surface Temperature (^oC)')
 
 figure(999); clf
 worldmap world
-contourfm(latgrid, longrid, sstGrid(:,:,7)','linecolor','none');
+contourfm(latgrid, longrid2, sstGridlong(:,:,7)','linecolor','none');
 colorbar
 geoshow('landareas.shp','FaceColor','black')
 title('July Sea Surface Temperature (^oC)')
@@ -79,13 +96,13 @@ title('July Sea Surface Temperature (^oC)')
 %% 4. Calculate and plot a global map of annual mean pCO2
 %<--
 % Find the mean!
-meanpCO2 = mean(pCO2Grid,3);
-meanpsst = mean(sstGrid,3);
+meanpCO2 = mean(pCO2Gridlong,3);
+meanpsst = mean(sstGridlong,3);
 %disp(meanpCO2)
 
 figure(2)
 worldmap world
-contourfm(latgrid, longrid, pCO2Grid(:,:,1)', 'linecolor','none');
+contourfm(latgrid, longrid2, pCO2Gridlong(:,:,1)'); %, 'linecolor','none');
 colorbar
 geoshow('landareas.shp','FaceColor','black')
 title('Annual Mean pCO2')
@@ -100,7 +117,7 @@ mean_difference = meanpCO2' - meanpCO22000;
 
 figure(3); clf
 worldmap world
-contourfm(latgrid, longrid, mean_difference, 'linecolor','none');
+contourfm(latgrid, longrid2, mean_difference, 'linecolor','none');
 colormap(cmocean('balance')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
 title('Difference between mean seawater pCO2 and atm pCO2')
@@ -109,12 +126,12 @@ title('Difference between mean seawater pCO2 and atm pCO2')
 %% 6. Calculate relative roles of temperature and of biology/physics in controlling seasonal cycle
 
 % Normalize pCO2 around mean annual temp ---> pCO2 w/ biophysical effect
-biopCO2 = pCO2Grid.*exp(0.0423*(repmat(meanpsst,[1 1 12])-sstGrid));
+biopCO2 = pCO2Gridlong.*exp(0.0423*(repmat(meanpsst,[1 1 12])-sstGridlong));
 
 % Effect of Temperature on pCO2
     % calculating the amount of pCO2 change caused by temp change
 
-temppCO2 = meanpCO2.*exp(0.0423*(sstGrid-repmat(meanpsst,[1 1 12])));
+temppCO2 = meanpCO2.*exp(0.0423*(sstGridlong-repmat(meanpsst,[1 1 12])));
 
 % T-B effects
 % + means temp exceeds bio, - means bio exceeds temp
@@ -136,7 +153,7 @@ latvector=unique(CO2data.LAT) %list of all the latitudes
 batslat=find(latvector==32) %in that list the position of the latitude of interest
 longvector= unique(CO2data.LON)
 batslong= find(longvector==297.500)
- bats= pCO2Grid(batslong,batslat,:)
+ bats= pCO2Gridlong(batslong,batslat,:)
  
 bats1d=squeeze(bats)
 figure(7); clf
@@ -152,7 +169,7 @@ ylabel("Seawater pCO2")
 
 plat=find(latvector==52) %in that list the position of the latitude of interest
 plong= find(longvector==217.500)
- papa= pCO2Grid(plong,plat,:)
+ papa= pCO2Gridlong(plong,plat,:)
  
 papa1d=squeeze(papa)
 figure(8); clf
@@ -166,7 +183,7 @@ ylabel("Seawater pCO2")
 %ross = find(CO2data.LAT == -75 & CO2data.LON == 185);
 rlat=find(latvector==76) %in that list the position of the latitude of interest
 rlong= find(longvector==187.500)
- ross= pCO2Grid(rlat,rlong,:)
+ ross= pCO2Gridlong(rlat,rlong,:)
  
 ross1d=squeeze(ross)
 figure(9); clf
@@ -188,12 +205,12 @@ stalong= [297.5 217.5 187.5]
 % seasonal amplitude for the pCO2 values corrected to the mean water temperature
 
 % Equation 3
-deltaBiopCO2 = (max(biopCO2,[],3) - min(biopCO2,[],3))';
+deltaBiopCO2 = (max(biopCO2,[],3) - min(biopCO2,[],3));
 
 %takahashi fig 7
 figure(4); clf
 worldmap world
-contourfm(latgrid, longrid, deltaBiopCO2, 'linecolor','none');
+contourfm(latgrid, longrid2, deltaBiopCO2', 'linecolor','none');
 colormap(cmocean('haline')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
 scatterm(stalat, stalong,'r', 'filled');
@@ -207,7 +224,7 @@ deltaTemppCO2 = (max(temppCO2,[],3) - min(temppCO2,[],3))';
 
 figure(5); clf
 worldmap world
-contourfm(latgrid, longrid, deltaTemppCO2, 'linecolor','none');
+contourfm(latgrid, longrid2, deltaTemppCO2, 'linecolor','none');
 colormap(cmocean('haline')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
 scatterm(stalat, stalong, 'r', 'filled');
@@ -218,7 +235,7 @@ title('Seasonal Temperature Effect on Seawater pCO2')
 % T-B 
 figure(6); clf
 worldmap world
-contourfm(latgrid, longrid, tbAnnualMean', 'linecolor','none');
+contourfm(latgrid, longrid2, tbAnnualMean', 'linecolor','none');
 colormap(cmocean('balance')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
 scatterm(stalat, stalong, 'r','filled');
