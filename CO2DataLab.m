@@ -101,7 +101,7 @@ mean_difference = meanpCO2' - meanpCO22000;
 figure(3); clf
 worldmap world
 contourfm(latgrid, longrid, mean_difference, 'linecolor','none');
-colorbar ;
+colormap(cmocean('balance')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
 title('Difference between mean seawater pCO2 and atm pCO2')
 
