@@ -201,6 +201,7 @@ ylabel("Seawater pCO2")
 stalat= [32 52 76]
 stalong= [297.5 217.5 187.5]
 %making a vector with the long of our stations
+
 %% Fig 4. Seasonal Biological Drawdown 
 % seasonal amplitude for the pCO2 values corrected to the mean water temperature
 
@@ -229,7 +230,7 @@ colormap(cmocean('haline')); colorbar;
 geoshow('landareas.shp','FaceColor','black');
 scatterm(stalat, stalong, 'r', 'filled');
 title('Seasonal Temperature Effect on Seawater pCO2')
-% JUST NEED TO FIGURE OUT HOW TO CHANGE THE COLOR OF THE POINTS
+
 %% Figure 6. Temp v Bio Effect
 
 % T-B 
