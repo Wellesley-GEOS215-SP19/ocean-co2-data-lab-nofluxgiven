@@ -153,14 +153,30 @@ latvector=unique(CO2data.LAT) %list of all the latitudes
 batslat=find(latvector==32) %in that list the position of the latitude of interest
 longvector= unique(CO2data.LON)
 batslong= find(longvector==297.500)
- bats= pCO2Gridlong(batslong,batslat,:)
- 
-bats1d=squeeze(bats)
+ batspCO2= pCO2Gridlong(batslong,batslat,:)
+  batsst= sstGrid(batslong,batslat,:)
+  batsbio= biopCO2(batslong,batslat, :)
+batsCO21=squeeze(batspCO2)
+batsst1=squeeze(batsst)
+batsbio1=squeeze(batsbio)
+
 figure(7); clf
-plot(mongrid,bats1d)
+subplot(3,1,1)
+plot(mongrid,batsCO21)
 title("BATS Station seasonal pCO2")
 xlabel("Month")
 ylabel("Seawater pCO2") 
+subplot(3,1,2)
+plot(mongrid, batsst1)
+title("BATS Station Temp")
+xlabel("Month")
+ylabel("Seawater Temp")
+subplot(3,1,3)
+plot(mongrid, batsbio1)
+title("BATS Station biophys")
+xlabel("Month")
+ylabel("Seawater biophys effect")
+
 
 %% Station Papa
 % 50.1°N, 144.9°W
