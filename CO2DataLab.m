@@ -225,6 +225,7 @@ rbio1=squeeze(rbio);
 
 ross1d=squeeze(rpCO2)
 figure(9); clf
+subplot(3,1,1)
 plot(mongrid,ross1d)
 title("Ross Sea Station seasonal pCO2")
 xlabel("Month")
