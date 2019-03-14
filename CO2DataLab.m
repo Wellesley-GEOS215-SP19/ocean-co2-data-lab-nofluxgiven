@@ -73,7 +73,7 @@ end
 %(though you may need to make modifications based on differences in how you
 %set up or named your variables above).
 
-figure(1)
+figure(1); clf
 worldmap world
 contourfm(latgrid, longrid2, sstGridlong(:,:,1)','linecolor','none');
 colorbar
@@ -100,9 +100,9 @@ meanpCO2 = mean(pCO2Gridlong,3);
 meanpsst = mean(sstGridlong,3);
 %disp(meanpCO2)
 
-figure(2)
+figure(2); clf
 worldmap world
-contourfm(latgrid, longrid2, pCO2Gridlong(:,:,1)'); %, 'linecolor','none');
+contourfm(latgrid, longrid2, pCO2Gridlong(:,:,1)', 'linecolor','none');
 colorbar
 geoshow('landareas.shp','FaceColor','black')
 title('Annual Mean pCO2')
@@ -181,7 +181,7 @@ ylabel("Seawater pCO2")
 %% Ross Sea
 % 75°S 175°W? / ?75°S 175°W
 %ross = find(CO2data.LAT == -75 & CO2data.LON == 185);
-rlat=find(latvector==76) %in that list the position of the latitude of interest
+rlat=find(latvector==-76) %in that list the position of the latitude of interest
 rlong= find(longvector==187.500)
  ross= pCO2Gridlong(rlat,rlong,:)
  
@@ -198,7 +198,7 @@ ylabel("Seawater pCO2")
 % seasonal cycle above
 %making a vector with the lat of our stations of interest
 % bats, papa, ross
-stalat= [32 52 76]
+stalat= [32 52 -76]
 stalong= [297.5 217.5 187.5]
 %making a vector with the long of our stations
 
