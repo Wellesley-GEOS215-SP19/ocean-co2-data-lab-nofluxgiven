@@ -153,7 +153,7 @@ latvector=unique(CO2data.LAT) %list of all the latitudes
 batslat=find(latvector==32) %in that list the position of the latitude of interest
 longvector= unique(CO2data.LON)
 batslong= find(longvector==297.500)
- batspCO2= pCO2Gridlong(batslong,batslat,:);
+ batspCO2= pCO2Gridlong(batslong,batslat,:)
   batsst= sstGrid(batslong,batslat,:)
   batsbio= biopCO2(batslong,batslat, :)
 batsCO21=squeeze(batspCO2)
@@ -214,16 +214,15 @@ ylabel("Seawater Biophys effect")
 % 75°S 175°W? / ?75°S 175°W
 %ross = find(CO2data.LAT == -75 & CO2data.LON == 185);
 rlat=find(latvector==-76) %in that list the position of the latitude of interest
-rlong= find(longvector==187.500);
- rpCO2= pCO2Gridlong(rlat,rlong,:);
+rlong= find(longvector==187.500)
+ ross= pCO2Gridlong(rlat,rlong,:)
  
  rsst= sstGrid(rlong,rlat,:)
   rbio= biopCO2(rlong,rlat, :)
-rpCO21=squeeze(rpCO2);
-rsst1=squeeze(rsst);
-rbio1=squeeze(rbio);
-
-ross1d=squeeze(rpCO2)
+rCO21=squeeze(rpCO2)
+rsst1=squeeze(rsst)
+rbio1=squeeze(rbio)
+ross1d=squeeze(ross)
 figure(9); clf
 plot(mongrid,ross1d)
 title("Ross Sea Station seasonal pCO2")
