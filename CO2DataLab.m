@@ -193,10 +193,9 @@ papaCO21=squeeze(papapCO2)
 papasst1=squeeze(papasst)
 papabio1=squeeze(papabio)
  
-papa1d=squeeze(papa)
 figure(8); clf
 subplot(3,1,1)
-plot(mongrid,papa1d)
+plot(mongrid,papaCO21)
 title("Station Papa Seasonal pCO2")
 xlabel("Month")
 ylabel("Seawater pCO2") 
