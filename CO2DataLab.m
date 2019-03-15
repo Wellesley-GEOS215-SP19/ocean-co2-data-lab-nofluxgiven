@@ -136,8 +136,8 @@ temppCO2 = meanpCO2.*exp(0.0423*(sstGridlong-repmat(meanpsst,[1 1 12])));
 % T-B effects
 % + means temp exceeds bio, - means bio exceeds temp
 
-tb = mean(biopCO2-temppCO2);
-tbAnnualMean = mean(biopCO2-temppCO2,3);
+tb = mean(temppCO2-biopCO2);
+tbAnnualMean = mean(temppCO2-biopCO2,3);
 
 %% 7. Pull out and plot the seasonal cycle data from stations of interest
 %Do for BATS, Station P, and Ross Sea (note that Ross Sea is along a
